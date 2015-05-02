@@ -88,3 +88,13 @@ class Kanboard:
         else:
             print 'No project with id: ' + id
             return None
+
+    def get_all_projects(self):
+        rid = self._get_request_id()
+        params = self._create_request_params('getAllProjects', rid)
+        projects_props = self._send_request_with_assert(params, rid)
+        projects = []
+        if projects_props:
+            for prop in projects_props:
+                projects.append(project.Project(self, prop))
+        return projects
