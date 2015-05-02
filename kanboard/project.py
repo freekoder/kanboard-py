@@ -68,7 +68,7 @@ class Project(RemoteObject):
         else:
             return False
 
-        # BUG: no update without name param
+    # BUG: no update without name param
     def update_token(self, token):
         rid = self._get_request_id()
         params = self._create_request_params('updateProject', rid, {'id': self.id,
@@ -81,6 +81,10 @@ class Project(RemoteObject):
         else:
             return False
 
+    def remove(self):
+        rid = self._get_request_id()
+        params = self._create_request_params('removeProject', rid, {'project_id': self.id})
+        return self._send_request_with_assert(params, rid)
 
     def __unicode__(self):
         return u'Project{#' + unicode(self.id) + u', name: ' + self.name.decode('utf-8') + u', active: ' + \

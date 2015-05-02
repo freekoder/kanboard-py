@@ -13,8 +13,10 @@ def main():
     for project in projects:
         # project.update_description('TEST DESCRIPTION')
         # project.update_public(True)
-        project.update_token('testwwierjwpeorjwpeo')
+        # project.update_token('testwwierjwpeorjwpeo')
         print project
+
+    # board.get_project_by_name('234_12_12').remove()
 
 if __name__ == '__main__':
     main()
