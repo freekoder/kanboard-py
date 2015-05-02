@@ -1,46 +1,14 @@
 # -*- coding: utf-8 -*-
+__author__ = 'freekoder'
 
-__author__ = 'user'
-
-import json
-import requests
-
+from remote_obj import RemoteObject
 import project
 
 
-class Kanboard:
-
-    _request_id = 0
-    headers = {'content-type': 'application/json'}
-    username = 'jsonrpc'
-    token = None
+class Kanboard(RemoteObject):
 
     def __init__(self, url, token):
-        if not url or not token:
-            raise
-        self.url = url
-        self.token = token
-
-    def _get_request_id(self):
-        self._request_id += 1
-        return self._request_id
-
-    def _create_request_params(self, methon_name, rid, params=None):
-        request_params = {
-            'id': rid,
-            'jsonrpc': '2.0',
-            'method': methon_name,
-        }
-        if params:
-            request_params['params'] = params
-        return request_params
-
-    def _send_request_with_assert(self, params, rid):
-        response = requests.post(self.url, data=json.dumps(params), headers=self.headers,
-                                 auth=(self.username, self.token))
-        assert response.ok
-        assert response.json()['id'] == rid
-        return response.json()['result']
+        super(Kanboard, self).__init__(url, token)
 
     def get_version(self):
         rid = self._get_request_id()
