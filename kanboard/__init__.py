@@ -1,1 +1,1 @@
-
+from kanboard import Kanboard
