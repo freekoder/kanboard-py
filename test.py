@@ -9,20 +9,10 @@ def main():
                               'd9269bcdeec16bc4c937b29697cb2fa9b3516f0c365537b7fd52e988b9ca')
     print 'Version: ' + board.get_version()
     print 'Timezone: ' + board.get_timezone()
-    projects = board.get_all_projects()
-    for project in projects:
-        # project.update_description('TEST DESCRIPTION')
-        # project.update_public(True)
-        # project.update_token('testwwierjwpeorjwpeo')
-        # project.update_active(False)
-        project.set_public(True)
-        print project
-
-    projects = board.get_all_projects()
-    for project in projects:
-        print project
-
-    # board.get_project_by_name('234_12_12').remove()
+    project = board.get_project_by_name('test2_12_12')
+    if project:
+        column = project.get_column_by_name('Ожидающие')
+        print column
 
 if __name__ == '__main__':
     main()

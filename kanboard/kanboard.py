@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+
 __author__ = 'freekoder'
 
+from column import Column
 from remote_obj import RemoteObject
 import project
 
@@ -66,3 +68,11 @@ class Kanboard(RemoteObject):
             for prop in projects_props:
                 projects.append(project.Project(self, prop))
         return projects
+
+    # TODO: think about method remove from kanboard class
+    def get_column_by_id(self, id):
+        (status, result) = self._send_template_request('getColumn', {'column_id': id})
+        if status:
+            return Column(self, result)
+        else:
+            return None

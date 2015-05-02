@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
 __author__ = 'freekoder'
 
 from remote_obj import RemoteObject
+from column import Column
 
 
 class Project(RemoteObject):
@@ -9,7 +11,7 @@ class Project(RemoteObject):
     def __init__(self, board, props):
         self.board = board
         self.id = int(props['id'])
-        self.name = props['name'].encode('utf-8')
+        self.name = props['name']
         self.is_active = True if props['is_active'] == u'1' else False
         self.token = props['token']
         self.last_modified = props['last_modified']
@@ -82,9 +84,62 @@ class Project(RemoteObject):
         else:
             return False
 
+    # TODO: wrap activity into event class
+    # TODO: handle limit, start, end params
+    def get_activity(self, limit=0, start=0, end=0):
+        rid = self._get_request_id()
+        params = self._create_request_params('getProjectActivity', rid, {'project_ids': [self.id]})
+        activity = self._send_request_with_assert(params, rid)
+        return activity
+
+    # TODO: convert id/username map to user list
+    def get_members(self):
+        rid = self._get_request_id()
+        params = self._create_request_params('getMembers', rid, {'project_id': self.id})
+        members = self._send_request_with_assert(params, rid)
+        return members
+
+    # TODO: implement
+    def revoke_user(self, user):
+        pass
+
+    # TODO: implement
+    def allow_user(self, user):
+        pass
+
+    # TODO: implement
+    def get_board_info(self):
+        pass
+
+    def get_columns(self):
+        (status, result) = self._send_template_request('getColumns', {'project_id': self.id})
+        if status:
+            columns = []
+            for column_info in result:
+                columns.append(Column(self, column_info))
+            return columns
+        else:
+            return []
+
+    def get_column_by_id(self, id):
+        (status, result) = self._send_template_request('getColumn', {'column_id': id})
+        if status:
+            return Column(self, result)
+        else:
+            return None
+
+    def get_column_by_name(self, name):
+        if type(name) is str:
+            name = name.decode('utf-8')
+        columns = self.get_columns()
+        for column in columns:
+            if column.title == name:
+                return column
+        return None
+
     def __unicode__(self):
-        return u'Project{#' + unicode(self.id) + u', name: ' + self.name.decode('utf-8') + u', active: ' + \
-               unicode(self.is_active) + ', public: ' + unicode(self.is_public) + '}'
+        return u'Project{#' + unicode(self.id) + u', name: ' + self.name + u', active: ' + \
+               unicode(self.is_active) + u', public: ' + unicode(self.is_public) + u'}'
 
     def __str__(self):
         return unicode(self).encode('utf-8')
