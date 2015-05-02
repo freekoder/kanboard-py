@@ -14,6 +14,12 @@ def main():
         # project.update_description('TEST DESCRIPTION')
         # project.update_public(True)
         # project.update_token('testwwierjwpeorjwpeo')
+        # project.update_active(False)
+        project.set_public(True)
+        print project
+
+    projects = board.get_all_projects()
+    for project in projects:
         print project
 
     # board.get_project_by_name('234_12_12').remove()
