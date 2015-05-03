@@ -76,3 +76,22 @@ class Kanboard(RemoteObject):
             return Column(self, result)
         else:
             return None
+
+    # TODO: implement (think about method remove from kanboard class)
+    def get_task_by_id(self, task_id):
+        pass
+
+    # TODO: implement
+    def create_user(self, username, password, name=None, email=None, is_admin=False, default_project=None):
+        pass
+
+    # TODO: implement
+    def get_user_by_id(self, user_id):
+        pass
+
+    # TODO: implement
+    def get_all_users(self):
+        pass
+
+
+

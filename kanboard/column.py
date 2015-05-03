@@ -13,6 +13,14 @@ class Column(RemoteObject):
         self.task_limit = int(props['task_limit'])
         super(Column, self).__init__(project.url, project.token)
 
+    # TODO: implement
+    def update(self, title, task_limit=0, description=''):
+        pass
+
+    # TODO: implement
+    def remove(self):
+        pass
+
     def __unicode__(self):
         return u'Column{#' + unicode(self.id) + u', title: ' + self.title + \
                u', position: ' + unicode(self.position) + u'}'

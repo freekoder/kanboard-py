@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 __author__ = 'freekoder'
 
 from remote_obj import RemoteObject
@@ -136,6 +135,88 @@ class Project(RemoteObject):
             if column.title == name:
                 return column
         return None
+
+    # TODO: implement
+    def move_column_up(self, column):
+        pass
+
+    # TODO: implement
+    def move_column_down(self, column):
+        pass
+
+    # TODO: implement
+    def add_column(self, title, task_limit=0, description=''):
+        pass
+
+    # TODO: implement
+    def get_swimlines(self):
+        pass
+
+    # TODO: implement, difference with get_swimlines
+    def get_all_swimlines(self):
+        pass
+
+    # TODO: implement
+    def get_swimline_by_name(self, name):
+        pass
+
+    # TODO: implement
+    def add_swimline(self, name):
+        pass
+
+    # TODO: implement
+    def get_available_actions(self):
+        pass
+
+    # TODO: implement
+    def get_available_events(self):
+        pass
+
+    # TODO: implement
+    def get_compatible_events(self):
+        pass
+
+    # TODO: implement
+    def get_actions(self):
+        pass
+
+    # TODO: implement
+    def create_action(self, event_name, action_name, params):
+        pass
+
+    # TODO: implement, move to action class?
+    def remove_action(self, action_id):
+        pass
+
+    # TODO: implement
+    def create_task(self, title, color='', column=None, description='',
+                    owner_user=None, creator_user=None, score=0,
+                    date_due=None, category=None, swimline=None):
+        pass
+
+    # TODO: implement
+    def get_all_tasks(self):
+        pass
+
+    # TODO: implement
+    def get_overdue_tasks(self):
+        pass
+
+    # TODO: implement
+    def create_category(self, name):
+        pass
+
+    # TODO: implement
+    def get_category_by_id(self, id):
+        pass
+
+    # TODO: implement
+    def get_category_by_name(self, name):
+        pass
+
+    # TODO: implement
+    def get_all_categories(self):
+        pass
 
     def __unicode__(self):
         return u'Project{#' + unicode(self.id) + u', name: ' + self.name + u', active: ' + \
