@@ -3,6 +3,7 @@ __author__ = 'freekoder'
 
 from remote_obj import RemoteObject
 from column import Column
+from task import Task
 
 
 class Project(RemoteObject):
@@ -157,6 +158,10 @@ class Project(RemoteObject):
         pass
 
     # TODO: implement
+    def get_swimline_by_id(self, id):
+        return None
+
+    # TODO: implement
     def get_swimline_by_name(self, name):
         pass
 
@@ -190,13 +195,25 @@ class Project(RemoteObject):
 
     # TODO: implement
     def create_task(self, title, color='', column=None, description='',
-                    owner_user=None, creator_user=None, score=0,
+                    owner=None, creator=None, score=0,
                     date_due=None, category=None, swimline=None):
         pass
 
-    # TODO: implement
-    def get_all_tasks(self):
-        pass
+    def get_tasks(self, status=Task.OPEN):
+        (success, result) = self._send_template_request('getAllTasks', {'project_id': self.id, 'status_id': status})
+        if success and result:
+            tasks = []
+            for task_info in result:
+                tasks.append(Task(self, task_info))
+            return tasks
+        else:
+            return []
+
+    def get_opened_tasks(self):
+        return self.get_tasks(status=Task.OPEN)
+
+    def get_closed_tasks(self):
+        return self.get_tasks(status=Task.CLOSED)
 
     # TODO: implement
     def get_overdue_tasks(self):

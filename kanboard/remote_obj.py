@@ -33,14 +33,14 @@ class RemoteObject(object):
     def _send_request_with_assert(self, params, rid):
         response = requests.post(self.url, data=json.dumps(params), headers=self.headers,
                                  auth=(self.username, self.token))
-        # print response
-        # print response.json()
+        print response
+        print response.json()
         assert response.ok
         assert response.json()['id'] == rid
         return response.json()['result']
 
     # TODO: handle error
-    def _send_template_request(self, method_name, params):
+    def _send_template_request(self, method_name, params=None):
         rid = self._get_request_id()
         request = self._create_request_params(method_name, rid, params)
         response = requests.post(self.url, data=json.dumps(request), headers=self.headers,

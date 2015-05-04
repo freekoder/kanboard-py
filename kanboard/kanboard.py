@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-
 __author__ = 'freekoder'
 
+from user import User
 from column import Column
 from remote_obj import RemoteObject
 import project
@@ -37,14 +37,14 @@ class Kanboard(RemoteObject):
             print 'Can not create project with name ' + '"' + project_name + '"'
             return None
 
-    def get_project_by_id(self, id):
+    def get_project_by_id(self, project_id):
         rid = self._get_request_id()
-        params = self._create_request_params('getProjectById', rid, {'project_id': id})
+        params = self._create_request_params('getProjectById', rid, {'project_id': project_id})
         project_props = self._send_request_with_assert(params, rid)
         if project_props:
             return project.Project(self, project_props)
         else:
-            print 'No project with id: ' + id
+            print 'No project with id: ' + str(project_id)
             return None
 
     def get_project_by_name(self, name):
@@ -56,7 +56,7 @@ class Kanboard(RemoteObject):
         if project_props:
             return project.Project(self, project_props)
         else:
-            print 'No project with id: ' + id
+            print 'No project with name: ' + name
             return None
 
     def get_all_projects(self):
@@ -72,7 +72,7 @@ class Kanboard(RemoteObject):
     # TODO: think about method remove from kanboard class
     def get_column_by_id(self, id):
         (status, result) = self._send_template_request('getColumn', {'column_id': id})
-        if status:
+        if status and result:
             return Column(self, result)
         else:
             return None
@@ -81,17 +81,43 @@ class Kanboard(RemoteObject):
     def get_task_by_id(self, task_id):
         pass
 
-    # TODO: implement
-    def create_user(self, username, password, name=None, email=None, is_admin=False, default_project=None):
-        pass
+    def create_user(self, username, password, name=None, email=None, is_admin=None, default_project=None):
+        props = {'username': username, 'password': password}
+        if name:
+            props['name'] = name if type(name) is unicode else name.decode('utf-8')
+        if email:
+            props['email'] = email
+        if is_admin:
+            props['is_admin'] = 1 if is_admin else 0
+        if default_project:
+            props['default_project_id'] = default_project.id
+        (status, result) = self._send_template_request('createUser', props)
+        if status and result:
+            return self.get_user_by_id(result)
+        else:
+            return None
 
     # TODO: implement
+    def create_ldap_user(self, username=None, email=None, is_admin=None, default_project=None):
+        pass
+
     def get_user_by_id(self, user_id):
-        pass
+        (status, result) = self._send_template_request('getUser', {'user_id': user_id})
+        if status and result:
+            return User(self, result)
+        else:
+            return None
+
+    def get_all_users(self):
+        (status, result) = self._send_template_request('getAllUsers')
+        if status and result:
+            users = []
+            for user_info in result:
+                users.append(User(self, user_info))
+            return users
+        else:
+            return []
 
     # TODO: implement
-    def get_all_users(self):
+    def get_overdue_tasks(self):
         pass
-
-
-
