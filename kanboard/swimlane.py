@@ -4,9 +4,9 @@ __author__ = 'freekoder'
 from remote_obj import RemoteObject
 
 
-class Swimline(RemoteObject):
+class Swimlane(RemoteObject):
     def __init__(self, project, props):
-        super(Swimline, self).__init__(project.url, project.token)
+        super(Swimlane, self).__init__(project.url, project.token)
 
     # TODO: implement
     def move_up(self):

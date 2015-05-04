@@ -7,7 +7,7 @@ from remote_obj import RemoteObject
 class Column(RemoteObject):
     def __init__(self, project, props):
         self.project = project
-        self.id = props['id']
+        self.id = int(props['id'])
         self.title = props['title']
         self.position = int(props['position'])
         self.task_limit = int(props['task_limit'])
@@ -20,6 +20,14 @@ class Column(RemoteObject):
     # TODO: implement
     def remove(self):
         pass
+
+    def get_tasks(self):
+        all_tasks = self.project.get_opened_tasks()
+        tasks = []
+        for task in all_tasks:
+            if task.column.id == self.id:
+                tasks.append(task)
+        return tasks
 
     def __unicode__(self):
         return u'Column{#' + unicode(self.id) + u', title: ' + self.title + \

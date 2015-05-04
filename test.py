@@ -15,9 +15,14 @@ def main():
     #     print 'Can not create user'
     project = board.get_project_by_name('Test')
     # print project
-    tasks = project.get_closed_tasks()
-    for task in tasks:
-        print task.color
+    # tasks = project.get_closed_tasks()
+    # for task in tasks:
+    #     print task.color
+    column = project.get_column_by_name(u'Готовые')
+    print column
+    if column:
+        tasks = column.get_tasks()
+        print tasks
     # user = board.create_user('test_def', '123456', default_project=project)
     # print user
     # users = board.get_all_users()

@@ -6,7 +6,7 @@ from remote_obj import RemoteObject
 
 class Task(RemoteObject):
 
-    OPEN = 1
+    OPENED = 1
     CLOSED = 0
 
     def __init__(self, project, props):
@@ -26,7 +26,7 @@ class Task(RemoteObject):
         self.category = project.get_category_by_id(int(props['category_id']))
         self.creator = project.board.get_user_by_id(int(props['creator_id']))
         self.date_modification = props['date_modification']
-        self.swimline = project.get_swimline_by_id(int(props['swimline_id']))
+        self.swimlane = project.get_swimline_by_id(int(props['swimlane_id']))
         super(Task, self).__init__(project.url, project.token)
 
     # TODO: implement

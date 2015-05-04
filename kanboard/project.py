@@ -199,7 +199,7 @@ class Project(RemoteObject):
                     date_due=None, category=None, swimline=None):
         pass
 
-    def get_tasks(self, status=Task.OPEN):
+    def get_tasks(self, status=Task.OPENED):
         (success, result) = self._send_template_request('getAllTasks', {'project_id': self.id, 'status_id': status})
         if success and result:
             tasks = []
@@ -210,7 +210,7 @@ class Project(RemoteObject):
             return []
 
     def get_opened_tasks(self):
-        return self.get_tasks(status=Task.OPEN)
+        return self.get_tasks(status=Task.OPENED)
 
     def get_closed_tasks(self):
         return self.get_tasks(status=Task.CLOSED)
