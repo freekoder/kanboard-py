@@ -7,7 +7,7 @@ from kanboard.task import Task
 
 def main():
     board = kanboard.Kanboard('http://localhost:8080/jsonrpc.php',
-                              'd9269bcdeec16bc4c937b29697cb2fa9b3516f0c365537b7fd52e988b9ca')
+                              '347a020cb5ce709441aa42b2d5652fbb8b02e477104d1d9789f7b2d40df0')
     # user = board.create_user('Масимо23', '123456', name='test', email='test5@email.com')
     # if user:
     #     print user
@@ -18,11 +18,12 @@ def main():
     # tasks = project.get_closed_tasks()
     # for task in tasks:
     #     print task.color
-    column = project.get_column_by_name(u'Готовые')
+    column = project.get_column_by_name(u'Backlog')
     print column
     if column:
         tasks = column.get_tasks()
-        print tasks
+        for task in tasks:
+            print task.get_all_comments()
     # user = board.create_user('test_def', '123456', default_project=project)
     # print user
     # users = board.get_all_users()

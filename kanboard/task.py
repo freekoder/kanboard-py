@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'freekoder'
 
+from comment import Comment
 from remote_obj import RemoteObject
 
 
@@ -59,9 +60,15 @@ class Task(RemoteObject):
     def get_comment(self, id):
         pass
 
-    # TODO: implement
     def get_all_comments(self):
-        pass
+        (status, result) = self._send_template_request('getAllComments', {'task_id': self.id})
+        if status and result:
+            comments = []
+            for comment_info in result:
+                comments.append(Comment(self, comment_info))
+            return comments
+        else:
+            return []
 
     # TODO: implement
     def create_subtask(self, title, user=None, time_estimated=None, time_spent=None, status=None):
@@ -80,4 +87,4 @@ class Task(RemoteObject):
                u', active: ' + unicode(self.is_active) + u'}'
 
     def __str__(self):
-        return unicode(self).decode('utf-8')
+        return unicode(self).encode('utf-8')
