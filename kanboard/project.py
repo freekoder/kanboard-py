@@ -29,7 +29,6 @@ class Project(RemoteObject):
         else:
             return False
 
-    # BUG: no update without name param
     def update_description(self, description):
         rid = self._get_request_id()
         params = self._create_request_params('updateProject', rid, {'id': self.id,
@@ -42,7 +41,6 @@ class Project(RemoteObject):
         else:
             return False
 
-    # BUG: no update without name param
     def update_token(self, token):
         rid = self._get_request_id()
         params = self._create_request_params('updateProject', rid, {'id': self.id,
