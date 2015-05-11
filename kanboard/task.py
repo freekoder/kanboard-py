@@ -63,9 +63,12 @@ class Task(RemoteObject):
     def open(self):
         pass
 
-    # TODO: implement
     def close(self):
-        pass
+        (status, result) = self._send_template_request('closeTask', {'task_id': self.id})
+        if status and result:
+            return True
+        else:
+            return False
 
     # TODO: implement
     def remove(self):
