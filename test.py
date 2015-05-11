@@ -15,7 +15,8 @@ def main():
     #     print 'Can not create user'
     project = board.get_project_by_name('Test')
     column = project.get_column_by_name('Work in progress')
-    task = project.create_task('Created task', description='Test description', color=Task.COLOR_GREEN, column=column)
+    task = column.create_task('Create from column', description='created with script', color=Task.COLOR_ORANGE)
+    # task = project.create_task('Created task', description='Test description', color=Task.COLOR_GREEN, column=column)
     print task
     # print project
     # tasks = project.get_closed_tasks()
