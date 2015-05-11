@@ -193,11 +193,41 @@ class Project(RemoteObject):
     def remove_action(self, action_id):
         pass
 
-    # TODO: implement
+    # TODO: implement recurrence fields
     def create_task(self, title, color='', column=None, description='',
                     owner=None, creator=None, score=0,
-                    date_due=None, category=None, swimline=None):
-        pass
+                    date_due=None, category=None, swimlane=None):
+        params = {'title': title, 'project_id': self.id}
+        if color:
+            params.update({'color_id': color})
+        if column:
+            params.update({'column_id': column.id})
+        if owner:
+            params.update({'owner_id': owner.id})
+        if creator:
+            params.update({'creator_id': creator.id})
+        if score:
+            params.update({'score': score})
+        if description:
+            params.update({'description': description})
+        if date_due:
+            params.update({'date_due': date_due})
+        if category:
+            params.update({'category_id': category.id})
+        if swimlane:
+            params.update({'swimlane_id': swimlane.id})
+        (status, result) = self._send_template_request('createTask', params)
+        if status and result:
+            return self.get_task_by_id(result)
+        else:
+            return None
+
+    def get_task_by_id(self, task_id):
+        (status, result) = self._send_template_request('getTask', {'task_id': task_id})
+        if status and result:
+            return Task(self, result)
+        else:
+            return None
 
     def get_tasks(self, status=Task.OPENED):
         (success, result) = self._send_template_request('getAllTasks', {'project_id': self.id, 'status_id': status})

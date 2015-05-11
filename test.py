@@ -14,16 +14,19 @@ def main():
     # else:
     #     print 'Can not create user'
     project = board.get_project_by_name('Test')
+    column = project.get_column_by_name('Work in progress')
+    task = project.create_task('Created task', description='Test description', color=Task.COLOR_GREEN, column=column)
+    print task
     # print project
     # tasks = project.get_closed_tasks()
     # for task in tasks:
     #     print task.color
-    column = project.get_column_by_name(u'Backlog')
-    print column
-    if column:
-        tasks = column.get_tasks()
-        for task in tasks:
-            print task.get_all_comments()
+    # column = project.get_column_by_name(u'Backlog')
+    # print column
+    # if column:
+    #     tasks = column.get_tasks()
+    #     for task in tasks:
+    #         print task.get_all_comments()
     # user = board.create_user('test_def', '123456', default_project=project)
     # print user
     # users = board.get_all_users()

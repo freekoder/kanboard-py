@@ -10,6 +10,14 @@ class Task(RemoteObject):
     OPENED = 1
     CLOSED = 0
 
+    COLOR_YELLOW = 'yellow'
+    COLOR_BLUE = 'blue'
+    COLOR_RED = 'red'
+    COLOR_GREEN = 'green'
+    COLOR_PURPLE = 'purple'
+    COLOR_ORANGE = 'orange'
+    COLOR_GRAY = 'gray'
+
     def __init__(self, project, props):
         self.project = project
         self.id = int(props['id'])
@@ -28,6 +36,21 @@ class Task(RemoteObject):
         self.creator = project.board.get_user_by_id(int(props['creator_id']))
         self.date_modification = props['date_modification']
         self.swimlane = project.get_swimline_by_id(int(props['swimlane_id']))
+        self.date_completed = props['date_completed']
+        self.reference = props['reference']
+        self.date_modification = props['date_modification']
+        self.date_started = props['date_started']
+        self.time_spent = props['time_spent']
+        self.time_estimated = props['time_estimated']
+        self.date_moved = props['date_moved']
+        self.recurrence_status = props['recurrence_status'] if 'recurrence_status' in props else None
+        self.recurrence_trigger = props['recurrence_trigger'] if 'recurrence_trigger' in props else None
+        self.recurrence_factor = props['recurrence_factor'] if 'recurrence_factor' in props else None
+        self.recurrence_timeframe = props['recurrence_timeframe'] if 'recurrence_timeframe' in props else None
+        self.recurrence_basedate = props['recurrence_basedate'] if 'recurrence_basedate' in props else None
+        self.recurrence_parent = props['recurrence_parent'] if 'recurrence_parent' in props else None
+        self.recurrence_child = props['recurrence_child'] if 'recurrence_child' in props else None
+
         super(Task, self).__init__(project.url, project.token)
 
     # TODO: implement
