@@ -12,16 +12,19 @@ class Kanboard(RemoteObject):
     def __init__(self, url, token):
         super(Kanboard, self).__init__(url, token)
 
+    # TODO: rewrite with _send_template_request
     def get_version(self):
         rid = self._get_request_id()
         params = self._create_request_params('getVersion', rid)
         return self._send_request_with_assert(params, rid)
 
+    # TODO: rewrite with _send_template_request
     def get_timezone(self):
         rid = self._get_request_id()
         params = self._create_request_params('getTimezone', rid)
         return self._send_request_with_assert(params, rid)
 
+    # TODO: rewrite with _send_template_request
     def create_project(self, project_name, description=''):
         if type(project_name) is str:
             project_name = project_name.decode('utf-8')
@@ -38,15 +41,13 @@ class Kanboard(RemoteObject):
             return None
 
     def get_project_by_id(self, project_id):
-        rid = self._get_request_id()
-        params = self._create_request_params('getProjectById', rid, {'project_id': project_id})
-        project_props = self._send_request_with_assert(params, rid)
-        if project_props:
-            return project.Project(self, project_props)
+        (status, result) = self._send_template_request('getProjectById', {'project_id': project_id})
+        if status and result:
+            return project.Project(self, result)
         else:
-            print 'No project with id: ' + str(project_id)
             return None
 
+    # TODO: rewrite with _send_template_request
     def get_project_by_name(self, name):
         rid = self._get_request_id()
         if type(name) is str:
@@ -59,6 +60,7 @@ class Kanboard(RemoteObject):
             print 'No project with name: ' + name
             return None
 
+    # TODO: rewrite with _send_template_request
     def get_all_projects(self):
         rid = self._get_request_id()
         params = self._create_request_params('getAllProjects', rid)

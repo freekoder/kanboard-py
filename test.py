@@ -13,11 +13,18 @@ def main():
     #     print user
     # else:
     #     print 'Can not create user'
-    project = board.get_project_by_name('Test')
-    column = project.get_column_by_name('Done')
-    tasks = column.get_tasks()
-    for task in tasks:
-        task.close()
+    users = board.get_all_users()
+    for user in users:
+        print user
+        print 'Email: ' + str(user.email)
+        print 'Admin: ' + str(user.is_admin)
+        print 'Def Project: ' + str(user.default_project)
+
+    # project = board.get_project_by_name('Test')
+    # column = project.get_column_by_name('Done')
+    # tasks = column.get_tasks()
+    # for task in tasks:
+    #     task.close()
     # task = column.create_task('Create from column', description='created with script', color=Task.COLOR_ORANGE)
 
 
