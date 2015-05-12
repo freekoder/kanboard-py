@@ -19,6 +19,14 @@ class User(RemoteObject):
         self.notifications_enabled = True if props['notifications_enabled'] == '1' else False
         super(User, self).__init__(board.url, board.token)
 
+    # TODO: implement
+    def update(self, username=None, name=None, email=None, is_admin=None, default_project=None):
+        pass
+
+    # TODO: implement
+    def remove(self):
+        pass
+
     def __unicode__(self):
         return u'User{#' + str(self.id) + u', username: ' + self.username + u'}'
 
