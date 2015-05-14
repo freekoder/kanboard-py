@@ -68,3 +68,27 @@ for task in tasks:
         for comment in task.get_all_comments():
             print comment.comment
 ```
+
+Close all tasks at 'Done' column
+```python
+board = kanboard.Kanboard('http://localhost:8080/jsonrpc.php',
+                          '347a020cb5ce709441aa42b2d5652fbb8b02e477104d1d9789f7b2d40df0')
+
+project = board.get_project_by_name('Test')
+column = project.get_column_by_name('Done')
+tasks = column.get_tasks()
+for task in tasks:
+    task.close()
+```
+
+Update category and color of tasks
+```python
+board = kanboard.Kanboard('http://localhost:8080/jsonrpc.php',
+                          '347a020cb5ce709441aa42b2d5652fbb8b02e477104d1d9789f7b2d40df0')
+
+project = board.get_project_by_name('Test')
+
+host_category = project.get_category_by_name('host')
+for task in project.get_tasks():
+    task.update(category=host_category, color=Task.COLOR_BLUE)
+```
