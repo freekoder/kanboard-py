@@ -83,7 +83,7 @@ class Task(RemoteObject):
         pass
 
     #TODO: implement (???)
-    def get_comment(self, id):
+    def get_comment(self, comment_id):
         pass
 
     def get_all_comments(self):

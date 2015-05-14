@@ -4,6 +4,7 @@ __author__ = 'freekoder'
 from remote_obj import RemoteObject
 from column import Column
 from task import Task
+from category import Category
 
 
 class Project(RemoteObject):
@@ -251,17 +252,29 @@ class Project(RemoteObject):
     def create_category(self, name):
         pass
 
-    # TODO: implement
-    def get_category_by_id(self, id):
-        pass
+    def get_category_by_id(self, category_id):
+        (status, result) = self._send_template_request('getCategory', {'category_id': category_id})
+        if status and result:
+            return Category(self, result)
+        else:
+            return None
 
-    # TODO: implement
     def get_category_by_name(self, name):
-        pass
+        categories = self.get_all_categories()
+        for category in categories:
+            if category.name == name:
+                return category
+        return None
 
-    # TODO: implement
     def get_all_categories(self):
-        pass
+        (status, result) = self._send_template_request('getAllCategories', {'project_id': self.id})
+        if status and result:
+            categories = []
+            for info in result:
+                categories.append(Category(self, info))
+            return categories
+        else:
+            return []
 
     def __unicode__(self):
         return u'Project{#' + unicode(self.id) + u', name: ' + self.name + u', active: ' + \

@@ -13,12 +13,20 @@ def main():
     #     print user
     # else:
     #     print 'Can not create user'
-    users = board.get_all_users()
-    for user in users:
-        print user
-        print 'Email: ' + str(user.email)
-        print 'Admin: ' + str(user.is_admin)
-        print 'Def Project: ' + str(user.default_project)
+    # users = board.get_all_users()
+    # for user in users:
+    #     print user
+    #     print 'Email: ' + str(user.email)
+    #     print 'Admin: ' + str(user.is_admin)
+    #     print 'Def Project: ' + str(user.default_project)
+
+    test_project = board.get_project_by_name('Test')
+    for category in test_project.get_all_categories():
+        print category
+
+    tasks = test_project.get_tasks()
+    for task in tasks:
+        print task.category
 
     # project = board.get_project_by_name('Test')
     # column = project.get_column_by_name('Done')
