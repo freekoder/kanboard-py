@@ -112,13 +112,21 @@ class Task(RemoteObject):
     def move(self, column, position):
         pass
 
-    # TODO: implement
     def create_comment(self, user, content):
-        pass
+        (status, result) = self._send_template_request('createComment', {'task_id': self.id,
+                                                                         'user_id': user.id,
+                                                                         'content': content})
+        if status and result:
+            return self.get_comment(result)
+        else:
+            return False
 
-    #TODO: implement (???)
     def get_comment(self, comment_id):
-        pass
+        (status, result) = self._send_template_request('getComment', {'comment_id': comment_id})
+        if status and result:
+            return Comment(self, result)
+        else:
+            return None
 
     def get_all_comments(self):
         (status, result) = self._send_template_request('getAllComments', {'task_id': self.id})

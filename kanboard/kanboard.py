@@ -110,6 +110,13 @@ class Kanboard(RemoteObject):
         else:
             return None
 
+    def get_user_by_username(self, username):
+        users = self.get_all_users()
+        for user in users:
+            if user.username == username:
+                return user
+        return None
+
     def get_all_users(self):
         (status, result) = self._send_template_request('getAllUsers')
         if status and result:

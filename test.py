@@ -20,6 +20,9 @@ def main():
     #     print 'Admin: ' + str(user.is_admin)
     #     print 'Def Project: ' + str(user.default_project)
 
+    admin_user = board.get_user_by_username('admin')
+    print 'User: ' + str(admin_user)
+
     test_project = board.get_project_by_name('Test')
     for category in test_project.get_all_categories():
         print category
@@ -32,10 +35,13 @@ def main():
     for task in closed_tasks:
         task.open()
 
+
+
     host_category = test_project.get_category_by_name('host')
     for task in tasks:
         task.update(category=host_category, color=Task.COLOR_BLUE, description='Test description')
         task.update(title='Hi kanboard')
+        task.create_comment(admin_user, 'Test comment from admin')
 
 
     # done_task = test_project.get_column_by_name('Done').get_tasks()
