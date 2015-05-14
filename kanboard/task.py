@@ -4,6 +4,8 @@ __author__ = 'freekoder'
 from comment import Comment
 from remote_obj import RemoteObject
 
+# TODO: create aliases for update
+
 
 class Task(RemoteObject):
 
@@ -53,11 +55,37 @@ class Task(RemoteObject):
 
         super(Task, self).__init__(project.url, project.token)
 
-    # TODO: implement
-    def update(self, title=None, color=None, column=None, description=None,
-                    owner_user=None, creator_user=None, score=None,
-                    date_due=None, category=None, swimline=None):
-        pass
+    # TODO: implement recurrence fields
+    def update(self, title=None, color=None, column=None,
+               description=None, owner=None, creator=None,
+               score=None, date_due=None, category=None, swimlane=None):
+        props = {'id': self.id, 'project_id': self.project.id}
+        if title:
+            props['title'] = title
+        if color:
+            props['color_id'] = color
+        if column:
+            props['column_id'] = column.id
+        if description:
+            props['description'] = description
+        if owner:
+            props['owner_id'] = owner.id
+        if creator:
+            props['creator_id'] = creator.id
+        if score:
+            props['score'] = score
+        if date_due:
+            props['date_due'] = date_due
+        if category:
+            props['category_id'] = category.id
+        if swimlane:
+            props['swimlane_id'] = swimlane.id
+
+        (status, result) = self._send_template_request('updateTask', props)
+        if status and result:
+            return result
+        else:
+            return False
 
     def open(self):
         (status, result) = self._send_template_request('openTask', {'task_id': self.id})
