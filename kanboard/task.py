@@ -59,9 +59,12 @@ class Task(RemoteObject):
                     date_due=None, category=None, swimline=None):
         pass
 
-    # TODO: implement
     def open(self):
-        pass
+        (status, result) = self._send_template_request('openTask', {'task_id': self.id})
+        if status and result:
+            return True
+        else:
+            return False
 
     def close(self):
         (status, result) = self._send_template_request('closeTask', {'task_id': self.id})
@@ -70,9 +73,12 @@ class Task(RemoteObject):
         else:
             return False
 
-    # TODO: implement
     def remove(self):
-        pass
+        (status, result) = self._send_template_request('removeTask', {'task_id': self.id})
+        if status and result:
+            return True
+        else:
+            return False
 
     # TODO: implement
     def move(self, column, position):

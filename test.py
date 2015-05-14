@@ -28,6 +28,14 @@ def main():
     for task in tasks:
         print task.category
 
+    closed_tasks = test_project.get_closed_tasks()
+    for task in closed_tasks:
+        task.open()
+
+    done_task = test_project.get_column_by_name('Done').get_tasks()
+    for task in done_task:
+        task.remove()
+
     # project = board.get_project_by_name('Test')
     # column = project.get_column_by_name('Done')
     # tasks = column.get_tasks()
