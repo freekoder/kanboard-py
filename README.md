@@ -92,3 +92,29 @@ host_category = project.get_category_by_name('host')
 for task in project.get_tasks():
     task.update(category=host_category, color=Task.COLOR_BLUE)
 ```
+
+get tasks for swimlane
+```python
+test_project = board.get_project_by_name('Test')
+swimlane = test_project.get_swimlane_by_name('Custom swimlane')
+columns = swimlane.get_columns()
+for column in columns:
+    print column
+    for task in column.get_tasks():
+        print u'\t' + unicode(task)
+```
+
+create task on swimlane
+```python
+test_project = board.get_project_by_name('Test')
+first_swimlane = test_project.get_swimlane_by_name('First Swimlane')
+first_swimlane.create_task('Sample title')
+```
+
+create task on swimlane and specified column
+```python
+test_project = board.get_project_by_name('Test')
+first_swimlane = test_project.get_swimlane_by_name('First Swimlane')
+done_column = first_swimlane.get_column_by_name('Done')
+done_column.create_task('test creation for swimlane')
+```

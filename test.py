@@ -24,24 +24,51 @@ def main():
     print 'User: ' + str(admin_user)
 
     test_project = board.get_project_by_name('Test')
-    for category in test_project.get_all_categories():
-        print category
+    swimlane = test_project.get_swimlane_by_name('Default swimlane')
+    columns = swimlane.get_columns()
+    for column in columns:
+        print column
+        tasks = column.get_tasks()
+        for task in tasks:
+            print u'\t' + unicode(task)
 
-    tasks = test_project.get_tasks()
+    first_swimlane = test_project.get_swimlane_by_name('First Swimlane')
+    done_column = first_swimlane.get_column_by_name('Done')
+    done_column.create_task('test creation for swimlane')
+    # backlog = test_project.get_column_by_name('Backlog')
+    # tasks = backlog.get_tasks()
     # for task in tasks:
-    #     print task.category
+    #     print task.swimlane
+    # swimlane = test_project.get_swimlane_by_name('First Swimlane')
+    # test_project.create_task('test from script2', owner=admin_user, swimlane=swimlane)
+    # # tasks = test_project.get_tasks()
+    # # for task in tasks:
+    # #     print task.swimlane
+    #
+    # swimlanes = test_project.get_all_swimlanes()
+    # for swimlane in swimlanes:
+    #     print swimlane
 
-    closed_tasks = test_project.get_closed_tasks()
-    for task in closed_tasks:
-        task.open()
-
-
-
-    host_category = test_project.get_category_by_name('host')
-    for task in tasks:
-        task.update(category=host_category, color=Task.COLOR_BLUE, description='Test description')
-        task.update(title='Hi kanboard')
-        task.create_comment(admin_user, 'Test comment from admin')
+    # swimlane = test_project.get_swimlane_by_name('First Swimlane')
+    # print swimlane
+    # for category in test_project.get_all_categories():
+    #     print category
+    #
+    # tasks = test_project.get_tasks()
+    # # for task in tasks:
+    # #     print task.category
+    #
+    # closed_tasks = test_project.get_closed_tasks()
+    # for task in closed_tasks:
+    #     task.open()
+    #
+    #
+    #
+    # host_category = test_project.get_category_by_name('host')
+    # for task in tasks:
+    #     task.update(category=host_category, color=Task.COLOR_BLUE, description='Test description')
+    #     task.update(title='Hi kanboard')
+    #     task.create_comment(admin_user, 'Test comment from admin')
 
 
     # done_task = test_project.get_column_by_name('Done').get_tasks()

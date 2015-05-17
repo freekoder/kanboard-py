@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+
 __author__ = 'freekoder'
 
 from remote_obj import RemoteObject
 from column import Column
 from task import Task
 from category import Category
+from swimlane import Swimlane
 
 
 class Project(RemoteObject):
@@ -149,23 +151,40 @@ class Project(RemoteObject):
         pass
 
     # TODO: implement
-    def get_swimlines(self):
+    def get_all_swimlanes(self):
         pass
 
-    # TODO: implement, difference with get_swimlines
-    def get_all_swimlines(self):
-        pass
+    def get_swimlanes(self):
+        (status, result) = self._send_template_request('getSwimlanes', {'project_id': self.id})
+        if status and result:
+            swimlanes = []
+            for info in result:
+                swimlanes.append(Swimlane(self, info))
+            return swimlanes
+        else:
+            return []
 
-    # TODO: implement
-    def get_swimline_by_id(self, id):
+    def get_swimlane_by_id(self, swimlane_id):
+        swimlanes = self.get_swimlanes()
+        for swimlane in swimlanes:
+            if swimlane.id == swimlane_id:
+                return swimlane
         return None
 
-    # TODO: implement
-    def get_swimline_by_name(self, name):
-        pass
+    def get_swimlane_by_name(self, name):
+        swimlanes = self.get_swimlanes()
+        for swimlane in swimlanes:
+            if swimlane.name == name:
+                return swimlane
+        return None
+        # (status, result) = self._send_template_request('getSwimlane', {'project_id': self.id, 'name': name})
+        # if status and result and len(result) > 0:
+        #     return Swimlane(self, result[0])
+        # else:
+        #     return None
 
     # TODO: implement
-    def add_swimline(self, name):
+    def add_swimlane(self, name):
         pass
 
     # TODO: implement

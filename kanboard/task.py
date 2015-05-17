@@ -37,7 +37,7 @@ class Task(RemoteObject):
         self.category = project.get_category_by_id(int(props['category_id']))
         self.creator = project.board.get_user_by_id(int(props['creator_id']))
         self.date_modification = props['date_modification']
-        self.swimlane = project.get_swimline_by_id(int(props['swimlane_id']))
+        self.swimlane = project.get_swimlane_by_id(int(props['swimlane_id']))
         self.date_completed = props['date_completed']
         self.reference = props['reference']
         self.date_modification = props['date_modification']
@@ -56,6 +56,7 @@ class Task(RemoteObject):
         super(Task, self).__init__(project.url, project.token)
 
     # TODO: implement recurrence fields
+    # TODO: category, owner or swimlane could be None
     def update(self, title=None, color=None, column=None,
                description=None, owner=None, creator=None,
                score=None, date_due=None, category=None, swimlane=None):
