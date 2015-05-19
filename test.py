@@ -24,12 +24,19 @@ def main():
     print 'User: ' + str(admin_user)
 
     test_project = board.get_project_by_name('Test')
-    backlog = test_project.get_column_by_name('Work in progress')
-    done = test_project.get_column_by_name('Done')
-    print backlog
-    print done
-    for task in backlog.get_tasks():
-        print task.move(done)
+    task = test_project.get_tasks()[0]
+    print task
+    subtask = task.create_subtask('test subtask', user=admin_user)
+    print subtask
+
+    for subtask in task.get_all_subtasks():
+        print subtask
+    # backlog = test_project.get_column_by_name('Work in progress')
+    # done = test_project.get_column_by_name('Done')
+    # print backlog
+    # print done
+    # for task in backlog.get_tasks():
+    #     print task.move(done)
 
     # swimlane = test_project.get_swimlane_by_name('Default swimlane')
     # columns = swimlane.get_columns()

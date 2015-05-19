@@ -3,6 +3,7 @@ __author__ = 'freekoder'
 
 from comment import Comment
 from remote_obj import RemoteObject
+from subtask import Subtask
 
 # TODO: create aliases for update
 
@@ -145,17 +146,38 @@ class Task(RemoteObject):
         else:
             return []
 
-    # TODO: implement
-    def create_subtask(self, title, user=None, time_estimated=None, time_spent=None, status=None):
-        pass
+    def create_subtask(self, title, user=None, time_estimated=None, time_spent=None, task_status=None):
+        props = {'task_id': self.id, 'title': title}
+        if user:
+            props['user_id'] = user.id
+        if time_estimated:
+            props['time_estimated'] = time_estimated
+        if time_spent:
+            props['time_spent'] = time_spent
+        if task_status:
+            props['status'] = task_status
+        (status, result) = self._send_template_request('createSubtask', props)
+        if status and result:
+            return self.get_subtask_by_id(result)
+        else:
+            return None
 
-    # TODO: implement
-    def get_subtask_by_id(self, id):
-        pass
+    def get_subtask_by_id(self, subtask_id):
+        (status, result) = self._send_template_request('getSubtask', {'subtask_id': subtask_id})
+        if status and result:
+            return Subtask(self, result)
+        else:
+            return None
 
-    # TODO: implement
     def get_all_subtasks(self):
-        pass
+        (status, result) = self._send_template_request('getAllSubtasks', {'task_id': self.id})
+        if status and result:
+            subtasks = []
+            for info in result:
+                subtasks.append(Subtask(self, info))
+            return subtasks
+        else:
+            return []
 
     def __unicode__(self):
         return u'Task{#' + unicode(self.id) + u', title: ' + self.title + \
