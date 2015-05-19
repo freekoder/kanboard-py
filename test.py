@@ -24,17 +24,24 @@ def main():
     print 'User: ' + str(admin_user)
 
     test_project = board.get_project_by_name('Test')
-    swimlane = test_project.get_swimlane_by_name('Default swimlane')
-    columns = swimlane.get_columns()
-    for column in columns:
-        print column
-        tasks = column.get_tasks()
-        for task in tasks:
-            print u'\t' + unicode(task)
+    backlog = test_project.get_column_by_name('Work in progress')
+    done = test_project.get_column_by_name('Done')
+    print backlog
+    print done
+    for task in backlog.get_tasks():
+        print task.move(done)
 
-    first_swimlane = test_project.get_swimlane_by_name('First Swimlane')
-    done_column = first_swimlane.get_column_by_name('Done')
-    done_column.create_task('test creation for swimlane')
+    # swimlane = test_project.get_swimlane_by_name('Default swimlane')
+    # columns = swimlane.get_columns()
+    # for column in columns:
+    #     print column
+    #     tasks = column.get_tasks()
+    #     for task in tasks:
+    #         print u'\t' + unicode(task)
+    #
+    # first_swimlane = test_project.get_swimlane_by_name('First Swimlane')
+    # done_column = first_swimlane.get_column_by_name('Done')
+    # done_column.create_task('test creation for swimlane')
     # backlog = test_project.get_column_by_name('Backlog')
     # tasks = backlog.get_tasks()
     # for task in tasks:

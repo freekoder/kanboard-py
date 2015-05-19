@@ -109,9 +109,15 @@ class Task(RemoteObject):
         else:
             return False
 
-    # TODO: implement
-    def move(self, column, position):
-        pass
+    def move(self, column, position=1):
+        (status, result) = self._send_template_request('moveTaskPosition', {'project_id': self.project.id,
+                                                                            'task_id': self.id,
+                                                                            'column_id': column.id,
+                                                                            'position': position})
+        if status and result:
+            return result
+        else:
+            return False
 
     def create_comment(self, user, content):
         (status, result) = self._send_template_request('createComment', {'task_id': self.id,
