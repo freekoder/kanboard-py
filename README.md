@@ -118,3 +118,18 @@ first_swimlane = test_project.get_swimlane_by_name('First Swimlane')
 done_column = first_swimlane.get_column_by_name('Done')
 done_column.create_task('test creation for swimlane')
 ```
+
+create subtask
+```python
+test_project = board.get_project_by_name('Test')
+task = test_project.get_tasks()[0]
+subtask = task.create_subtask('test subtask')
+```
+
+close all subtask
+```python
+test_project = board.get_project_by_name('Test')
+task = test_project.get_tasks()[0]
+for subtask in task.get_all_subtasks():
+    subtask.update_status(Subtask.STATUS_DONE)
+```

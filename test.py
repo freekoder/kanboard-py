@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import kanboard
-from kanboard.task import Task
+from kanboard.subtask import Subtask
 
 
 def main():
@@ -30,7 +30,10 @@ def main():
     print subtask
 
     for subtask in task.get_all_subtasks():
+        subtask.update('OK OB')
+        subtask.update_status(Subtask.STATUS_DONE)
         print subtask
+        subtask.remove()
     # backlog = test_project.get_column_by_name('Work in progress')
     # done = test_project.get_column_by_name('Done')
     # print backlog
