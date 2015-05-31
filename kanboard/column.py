@@ -5,6 +5,7 @@ from remote_obj import RemoteObject
 
 
 class Column(RemoteObject):
+
     def __init__(self, project, props):
         self.project = project
         self.id = int(props['id'])
@@ -13,13 +14,40 @@ class Column(RemoteObject):
         self.task_limit = int(props['task_limit'])
         super(Column, self).__init__(project.url, project.token)
 
-    # TODO: implement
-    def update(self, title, task_limit=0, description=''):
-        pass
+    def update(self, title, task_limit=None, description=None):
+        props = {'column_id': self.id, 'title': title}
+        if task_limit:
+            props['task_limit'] = task_limit
+        if description:
+            props['description'] = description
+        (status, result) = self._send_template_request('updateColumn', props)
+        if status and result:
+            return result
+        else:
+            return False
 
-    # TODO: implement
     def remove(self):
-        pass
+        (status, result) = self._send_template_request('removeColumn', {'column_id': self.id})
+        if status and result:
+            return result
+        else:
+            return False
+
+    def move_up(self):
+        (status, result) = self._send_template_request('moveColumnUp', {'project_id': self.project.id,
+                                                                        'column_id': self.id})
+        if status and result:
+            return result
+        else:
+            return False
+
+    def move_down(self):
+        (status, result) = self._send_template_request('moveColumnDown', {'project_id': self.project.id,
+                                                                          'column_id': self.id})
+        if status and result:
+            return result
+        else:
+            return False
 
     def get_tasks(self):
         all_tasks = self.project.get_opened_tasks()

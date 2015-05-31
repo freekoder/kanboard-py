@@ -24,10 +24,10 @@ def main():
     # print 'User: ' + str(admin_user)
 
     test_project = board.get_project_by_name('Test')
-    categories = test_project.get_all_categories()
-    categories[0].remove()
-    for category in categories:
-        category.update(category.name + '_test')
+    columns = test_project.get_columns()
+    # columns[2].move_down()
+    for column in columns:
+        column.update(column.title, description='test description', task_limit=5)
     # task = test_project.get_tasks()[0]
     # print task
     # subtask = task.create_subtask('test subtask', user=admin_user)
