@@ -6,20 +6,25 @@ from remote_obj import RemoteObject
 
 class Category(RemoteObject):
 
-    # TODO: get project from props['project_id']
     def __init__(self, project, props):
         self.id = int(props['id'])
         self.name = props['name']
         self.project = project
         super(Category, self).__init__(project.url, project.token)
 
-    # TODO: implement
     def update(self, name):
-        pass
+        (status, result) = self._send_template_request('updateCategory', {'id': self.id, 'name': name})
+        if status and result:
+            return result
+        else:
+            return False
 
-    # TODO: implement
     def remove(self):
-        pass
+        (status, result) = self._send_template_request('removeCategory', {'category_id': self.id})
+        if status and result:
+            return result
+        else:
+            return False
 
     def __unicode__(self):
         return u'Category{#' + unicode(self.id) + u', name: ' + self.name + u'}'

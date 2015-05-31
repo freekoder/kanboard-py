@@ -20,20 +20,24 @@ def main():
     #     print 'Admin: ' + str(user.is_admin)
     #     print 'Def Project: ' + str(user.default_project)
 
-    admin_user = board.get_user_by_username('admin')
-    print 'User: ' + str(admin_user)
+    # admin_user = board.get_user_by_username('admin')
+    # print 'User: ' + str(admin_user)
 
     test_project = board.get_project_by_name('Test')
-    task = test_project.get_tasks()[0]
-    print task
-    subtask = task.create_subtask('test subtask', user=admin_user)
-    print subtask
-
-    for subtask in task.get_all_subtasks():
-        subtask.update('OK OB')
-        subtask.update_status(Subtask.STATUS_DONE)
-        print subtask
-        subtask.remove()
+    categories = test_project.get_all_categories()
+    categories[0].remove()
+    for category in categories:
+        category.update(category.name + '_test')
+    # task = test_project.get_tasks()[0]
+    # print task
+    # subtask = task.create_subtask('test subtask', user=admin_user)
+    # print subtask
+    #
+    # for subtask in task.get_all_subtasks():
+    #     subtask.update('OK OB')
+    #     subtask.update_status(Subtask.STATUS_DONE)
+    #     print subtask
+    #     subtask.remove()
     # backlog = test_project.get_column_by_name('Work in progress')
     # done = test_project.get_column_by_name('Done')
     # print backlog
