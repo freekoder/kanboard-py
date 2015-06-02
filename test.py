@@ -24,10 +24,17 @@ def main():
     # print 'User: ' + str(admin_user)
 
     test_project = board.get_project_by_name('Test')
-    columns = test_project.get_columns()
-    # columns[2].move_down()
-    for column in columns:
-        column.update(column.title, description='test description', task_limit=5)
+    tasks = test_project.get_tasks()
+    for task in tasks:
+        success = task.create_file('test.txt', False, '/tmp/test.txt')
+        print success
+        # if task.get_all_files():
+        #     for attachment in task.get_all_files():
+        #         print attachment
+    # columns = test_project.get_columns()
+    # # columns[2].move_down()
+    # for column in columns:
+    #     column.update(column.title, description='test description', task_limit=5)
     # task = test_project.get_tasks()[0]
     # print task
     # subtask = task.create_subtask('test subtask', user=admin_user)

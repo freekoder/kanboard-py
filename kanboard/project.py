@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 __author__ = 'freekoder'
 
 from remote_obj import RemoteObject

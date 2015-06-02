@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+import base64
+
 __author__ = 'freekoder'
 
 from comment import Comment
 from remote_obj import RemoteObject
 from subtask import Subtask
+from attachment import Attachment
 
 # TODO: create aliases for update
 
@@ -178,6 +181,40 @@ class Task(RemoteObject):
             return subtasks
         else:
             return []
+
+    def _file_get_contents_base64(self, filename):
+        with open(filename) as f:
+            file_contents = f.read()
+        if file_contents:
+            return base64.b64encode(file_contents)
+        else:
+            return None
+
+    def create_file(self, filename, is_image, local_file):
+        file_blob = self._file_get_contents_base64(local_file)
+        is_image = '1' if is_image else '0'
+        if file_blob:
+            (status, result) = self._send_template_request('createFile', {'project_id': self.project.id,
+                                                                          'task_id': self.id,
+                                                                          'filename': filename,
+                                                                          'is_image': is_image,
+                                                                          'blob': file_blob})
+            if status and result:
+                return result
+            else:
+                return False
+        else:
+            return False
+
+    def get_all_files(self):
+        (status, result) = self._send_template_request('getAllFiles', {'task_id': self.id})
+        if status and result:
+            files = []
+            for file_info in result:
+                files.append(Attachment(self, file_info))
+            return files
+        else:
+            return False
 
     def __unicode__(self):
         return u'Task{#' + unicode(self.id) + u', title: ' + self.title + \
