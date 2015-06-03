@@ -20,17 +20,17 @@ def main():
     #     print 'Admin: ' + str(user.is_admin)
     #     print 'Def Project: ' + str(user.default_project)
 
-    # admin_user = board.get_user_by_username('admin')
-    # print 'User: ' + str(admin_user)
-
+    admin_user = board.get_user_by_username('simple')
+    print 'User: ' + str(admin_user)
+    print admin_user.update(email='done@test.com')
     test_project = board.get_project_by_name('Test')
-    tasks = test_project.get_tasks()
-    for task in tasks:
-        # success = task.create_file('test.txt', False, '/tmp/test.txt')
-        files = task.get_all_files()
-        for attach in files:
-            print attach.remove()
-            # if '.txt' in attach.name:
+    # tasks = test_project.get_tasks()
+    # for task in tasks:
+    #     success = task.create_file('test.txt', False, '/tmp/test.txt')
+        # files = task.get_all_files()
+        # for attach in files:
+        #     print attach.remove()
+        #     if '.txt' in attach.name:
             #     print attach.get_content()
         # print success
         # if task.get_all_files():
@@ -40,8 +40,8 @@ def main():
     # # columns[2].move_down()
     # for column in columns:
     #     column.update(column.title, description='test description', task_limit=5)
-    # task = test_project.get_tasks()[0]
-    # print task
+    task = test_project.get_tasks()[0]
+    print task
     # subtask = task.create_subtask('test subtask', user=admin_user)
     # print subtask
     #
