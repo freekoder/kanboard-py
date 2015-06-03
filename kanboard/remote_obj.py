@@ -45,9 +45,7 @@ class RemoteObject(object):
         request = self._create_request_params(method_name, rid, params)
         response = requests.post(self.url, data=json.dumps(request), headers=self.headers,
                                  auth=(self.username, self.token))
-        print response
         if response.ok and response.json()['id'] == rid and ('result' in response.json()):
-            # print response.json()
             return True, response.json()['result']
         else:
             return False, 'Error'

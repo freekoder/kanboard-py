@@ -133,3 +133,24 @@ task = test_project.get_tasks()[0]
 for subtask in task.get_all_subtasks():
     subtask.update_status(Subtask.STATUS_DONE)
 ```
+
+add attachment to task
+```python
+test_project = board.get_project_by_name('Test')
+task = test_project.get_tasks()[0]
+task.create_file('test.txt', False, '/tmp/test.txt')
+```
+
+get all attachments
+```python
+test_project = board.get_project_by_name('Test')
+task = test_project.get_tasks()[0]
+task.get_all_files()
+```
+
+get attachment content
+```python
+test_project = board.get_project_by_name('Test')
+task = test_project.get_tasks()[0]
+attachment = task.get_all_files()[0].get_content()
+```
