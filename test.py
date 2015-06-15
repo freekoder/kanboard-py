@@ -8,6 +8,16 @@ from kanboard.subtask import Subtask
 def main():
     board = kanboard.Kanboard('http://localhost:8080/jsonrpc.php',
                               '347a020cb5ce709441aa42b2d5652fbb8b02e477104d1d9789f7b2d40df0')
+
+    # board.create_link('distrupt')
+    #
+
+    link = board.get_link_by_id(14)
+    link.update('disepticon')
+    links = board.get_all_links()
+    for link in links:
+        print str(link) + ' => ' + str(link.opposite())
+
     # user = board.create_user('Масимо23', '123456', name='test', email='test5@email.com')
     # if user:
     #     print user
@@ -20,10 +30,10 @@ def main():
     #     print 'Admin: ' + str(user.is_admin)
     #     print 'Def Project: ' + str(user.default_project)
 
-    admin_user = board.get_user_by_username('simple')
-    print 'User: ' + str(admin_user)
-    print admin_user.update(email='done@test.com')
-    test_project = board.get_project_by_name('Test')
+    # admin_user = board.get_user_by_username('simple')
+    # print 'User: ' + str(admin_user)
+    # print admin_user.update(email='done@test.com')
+    # test_project = board.get_project_by_name('Test')
     # tasks = test_project.get_tasks()
     # for task in tasks:
     #     success = task.create_file('test.txt', False, '/tmp/test.txt')
@@ -40,8 +50,8 @@ def main():
     # # columns[2].move_down()
     # for column in columns:
     #     column.update(column.title, description='test description', task_limit=5)
-    task = test_project.get_tasks()[0]
-    print task
+    # task = test_project.get_tasks()[0]
+    # print task
     # subtask = task.create_subtask('test subtask', user=admin_user)
     # print subtask
     #

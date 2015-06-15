@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+
 __author__ = 'freekoder'
 
+from link import Link
 from user import User
 from column import Column
 from remote_obj import RemoteObject
@@ -130,3 +132,33 @@ class Kanboard(RemoteObject):
     # TODO: implement
     def get_overdue_tasks(self):
         pass
+
+    def get_all_links(self):
+        (status, result) = self._send_template_request('getAllLinks')
+        if status and result:
+            links = []
+            for link_info in result:
+                links.append(Link(self, link_info))
+            return links
+        return []
+
+    def get_link_by_label(self, label):
+        (status, result) = self._send_template_request('getLinkByLabel', {'label': label})
+        if status and result:
+            return Link(self, result)
+        else:
+            return None
+
+    def get_link_by_id(self, link_id):
+        (status, result) = self._send_template_request('getLinkById', {'link_id': link_id})
+        if status and result:
+            return Link(self, result)
+        else:
+            return None
+
+    def create_link(self, label, opposite_label=None):
+        (status, result) = self._send_template_request('createLink', {'label': label, 'opposite_label': opposite_label})
+        if status and result:
+            return self.get_link_by_id(result)
+        else:
+            return None

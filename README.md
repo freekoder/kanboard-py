@@ -154,3 +154,27 @@ test_project = board.get_project_by_name('Test')
 task = test_project.get_tasks()[0]
 attachment = task.get_all_files()[0].get_content()
 ```
+
+create new link with opposite one
+```python
+board = kanboard.Kanboard('http://localhost:8080/jsonrpc.php',
+                          '347a020cb5ce709441aa42b2d5652fbb8b02e477104d1d9789f7b2d40df0')
+link = board.create_link('manage', 'managed by')
+```
+
+get link by label and show opposite link
+```python
+link = board.get_link_by_label('manage')
+print link.opposite()
+```
+
+get all links
+```python
+links = board.get_all_links()
+```
+
+update link label
+```python
+link = board.get_link_by_id(10)
+link.update('prepared before')
+```
