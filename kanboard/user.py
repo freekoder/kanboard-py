@@ -10,7 +10,6 @@ class User(RemoteObject):
         self.username = props['username']
         self.password = props['password'] if 'password' in props else ''
         self.is_admin = True if props['is_admin'] == '1' else False
-        self.default_project = board.get_project_by_id(int(props['default_project_id']))
         self.is_ldap_user = True if props['is_ldap_user'] == '1' else False
         self.name = props['name']
         self.email = props['email']

@@ -6,17 +6,26 @@ from kanboard.subtask import Subtask
 
 
 def main():
-    board = kanboard.Kanboard('http://localhost:8080/jsonrpc.php',
-                              '347a020cb5ce709441aa42b2d5652fbb8b02e477104d1d9789f7b2d40df0')
+    board = kanboard.Kanboard('http://localhost:8000/jsonrpc.php',
+                              'f3ef774d36cb3eee20cd5ee0c9905dfca36dae4c661546dd86c15297a2e2')
 
     # board.create_link('distrupt')
     #
 
-    link = board.get_link_by_id(14)
-    link.update('disepticon')
-    links = board.get_all_links()
-    for link in links:
-        print str(link) + ' => ' + str(link.opposite())
+    # link = board.get_link_by_id(14)
+    # link.update('disepticon')
+    # links = board.get_all_links()
+    # for link in links:
+    #     print str(link) + ' => ' + str(link.opposite())
+
+    users = board.get_all_users()
+    for user in users:
+        print user
+
+    project = board.get_project_by_name('Test')
+    swimlanes = project.get_swimlanes()
+    for swimlane in swimlanes:
+        print swimlane.name
 
     # user = board.create_user('Масимо23', '123456', name='test', email='test5@email.com')
     # if user:

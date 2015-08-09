@@ -154,7 +154,7 @@ class Project(RemoteObject):
         pass
 
     def get_swimlanes(self):
-        (status, result) = self._send_template_request('getSwimlanes', {'project_id': self.id})
+        (status, result) = self._send_template_request('getAllSwimlanes', {'project_id': self.id})
         if status and result:
             swimlanes = []
             for info in result:
